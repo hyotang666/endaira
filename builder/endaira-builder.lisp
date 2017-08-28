@@ -40,7 +40,7 @@
     `(DEFMACRO ,name ,lambda-list
        ,@documentation
        ,@declaration
-       (WITH-HANDLER-NAMED,(cons (format nil "~A(expand)" name)
+       (WITH-HANDLER-NAMED,(cons (format nil "~A[expand]" name)
 				 (remove-ignored-vars (Vars<=lambda-list lambda-list :as :macro)
 						      declaration))
 	 ,@body))))
@@ -71,7 +71,7 @@
 				  `(,NAME ,LAMBDA-LIST
 					  ,@DOCUMENTATION
 					  ,@DECLARATION
-					  (WITH-HANDLER-NAMED,(CONS (FORMAT NIL "~S(~A)"NAME ',op)
+					  (WITH-HANDLER-NAMED,(CONS (FORMAT NIL "~S[~A]"NAME ',op)
 								    (REMOVE-IGNORED-VARS(VARS<=LAMBDA-LIST LAMBDA-LIST)DECLARATION))
 					    ,@BODY))))
 		     ,@BODY)))
@@ -84,7 +84,7 @@
 		 `(,name,lambda-list
 		    ,@documentation
 		    ,@declaration
-		    (WITH-HANDLER-NAMED,(cons (format nil "~A(FLET)"name)
+		    (WITH-HANDLER-NAMED,(cons (format nil "~A[FLET]"name)
 					      (remove-ignored-vars (Vars<=lambda-list lambda-list)
 								   declaration))
 		      ,@body))))
@@ -97,11 +97,11 @@
 		    (if(symbolp bind)
 		      bind
 		      (let((name(car bind)))
-			`(,name(WITH-HANDLER-NAMED,(format nil "LET(bind for ~A)"name)
+			`(,name(WITH-HANDLER-NAMED,(format nil "LET[bind for ~A]"name)
 				 ,@(cdr bind))))))
 		  binds)
        ,@declaration
-       (WITH-HANDLER-NAMED,(cons (format nil "LET(body)")
+       (WITH-HANDLER-NAMED,(cons (format nil "LET[body]")
 				 (remove-ignored-vars (mapcar #'ensure-car binds)
 						      declaration))
 	 ,@body))))
@@ -119,12 +119,12 @@
 		       (symbol bind)
 		       (list
 			 (let((var(car bind)))
-			   `(,var(WITH-HANDLER-NAMED,(cons (format nil "LET*(bind for ~A)"var)
+			   `(,var(WITH-HANDLER-NAMED,(cons (format nil "LET*[bind for ~A]"var)
 							   (seen-var var binds))
 				   ,@(cdr bind)))))))
 		   binds)
        ,@declaration
-       (WITH-HANDLER-NAMED,(cons (format nil "LET*(body)")
+       (WITH-HANDLER-NAMED,(cons (format nil "LET*[body]")
 				 (remove-ignored-vars (mapcar #'ensure-car binds)
 						      declaration))
 	 ,@body))))
@@ -143,17 +143,17 @@
     `(MULTIPLE-VALUE-BIND ,binds(WITH-HANDLER-NAMED"MULTIPLE-VALUE-BIND(init)"
 				  ,init-form)
        ,@declaration
-       (WITH-HANDLER-NAMED,(cons "MULTIPLE-VALUE-BIND(body)"
+       (WITH-HANDLER-NAMED,(cons "MULTIPLE-VALUE-BIND[body]"
 				 (remove-ignored-vars binds declaration))
 	 ,@body))))
 
 (defmacro endaira.core::destructuring-bind(binds init-form &body body)
   (multiple-value-bind(documentation declaration body)(parse-body body)
     (declare(ignore documentation))
-    `(DESTRUCTURING-BIND,binds(WITH-HANDLER-NAMED"DESTRUCTURING-BIND(init)"
+    `(DESTRUCTURING-BIND,binds(WITH-HANDLER-NAMED"DESTRUCTURING-BIND[init]"
 				,init-form)
        ,@declaration
-       (WITH-HANDLER-NAMED,(cons "DESTRUCTURING-BIND(body)"
+       (WITH-HANDLER-NAMED,(cons "DESTRUCTURING-BIND[body]"
 				 (remove-ignored-vars (Vars<=lambda-list binds :as :macro)
 						      declaration))
 	 ,@body))))
@@ -178,11 +178,11 @@
 (defmacro endaira.core::dolist((var init-form &optional return)&body body)
   (multiple-value-bind(documentation declaration body)(parse-body body)
     (declare(ignore documentation))
-    `(DOLIST(,var (WITH-HANDLER-NAMED"DOLIST(init)"
+    `(DOLIST(,var (WITH-HANDLER-NAMED"DOLIST[init]"
 		    ,init-form)
 		  ,return)
        ,@declaration
-       (WITH-HANDLER-NAMED,(cons "DOLIST(body)"
+       (WITH-HANDLER-NAMED,(cons "DOLIST[body]"
 				 (remove-ignored-vars (list var)declaration))
 	 ,@body))))
 
