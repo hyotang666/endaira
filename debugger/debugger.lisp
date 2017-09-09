@@ -4,6 +4,7 @@
 
 (defun debugger-hook(condition debugger-hook)
   (declare(ignore debugger-hook))
+  #+ecl(check-type condition condition)
   (unwind-protect
     (when *Acc*
       (setf *Current-package* *package*) ; for ecl

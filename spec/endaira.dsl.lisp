@@ -13,17 +13,17 @@
 
 #?(with-handler-named 0 1)
 :expanded-to
-(let((var(loop :for arg :in 'nil
-	       :for val :in (list)
-	       :collect (list arg (if *copy*
-				    `(quote ,(copy val))
-				    val)))))
+(let((var(loop :for endaira.dsl::arg :in 'nil
+	       :for endaira.dsl::val :in (list)
+	       :collect (list endaira.dsl::arg (if *copy*
+						 `(quote ,(endaira.copy:copy endaira.dsl::val))
+						 endaira.dsl::val)))))
   (handler-bind((error(lambda(condition)
 			(declare(ignore condition))
-			(push (make-situation :name '0
-					      :form '1
-					      :binds var)
-			      *acc*))))
+			(push (endaira.internals:make-situation :name '0
+								:form '1
+								:binds var)
+			      endaira.internals:*acc*))))
     1))
 
 ;;;; Arguments and Values:

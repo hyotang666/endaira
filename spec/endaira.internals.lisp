@@ -6,9 +6,9 @@
 (requirements-about *ACC*)
 
 ;;;; Description:
-; Acculate `SITUATION`s.
+; Accumulate `SITUATION`s.
 
-;;;; Value type is NULL
+;;;; Value type is LIST
 #? *ACC* :be-the LIST
 
 ; Initial value is NIL
@@ -35,7 +35,7 @@
 
 ;;;; Notes:
 ; For ECL.
-; ECL deubgger binds `*package*` with cl-user in debugger.
+; ECL debugger binds `*package*` with cl-user in debugger.
 
 (requirements-about QUIT-SIGNAL)
 
@@ -85,143 +85,104 @@
 
 ;;;; Arguments and Values:
 
-; name := 
+; name := (OR SYMBOL STRING (CONS (EQL SETF) T)), otherwise unspecified.
+#?(make-situation :name 0) => unspecified
 
-; binds := 
+; binds := list, otherwise unspecified.
+#?(make-situation :binds :not-list) => unspecified
 
-; form := 
+; form := T
 
-; result := 
+; result := situation
 
 ;;;; Affected By:
+; none
 
 ;;;; Side-Effects:
+; none
 
 ;;;; Notes:
 
 ;;;; Exceptional-Situations:
 
-(requirements-about SITUATION-NAME)
+(common-requirements-about (SITUATION-NAME NAME<=SITUATION)
+			   :as op)
 
 ;;;; Description:
+; Get its name from situation.
 
 #+syntax
-(SITUATION-NAME sb-kernel:instance) ; => result
+(OP sb-kernel:instance) ; => result
 
 ;;;; Arguments and Values:
 
-; instance := 
+; instance := situation, otherwise error.
+#?(op :not-situation-object) :signals error
+,:lazy T
 
-; result := 
+; result := (or symbol string (cons (eql setf) t))
 
 ;;;; Affected By:
+; none
 
 ;;;; Side-Effects:
+; none
 
 ;;;; Notes:
 
 ;;;; Exceptional-Situations:
 
-(requirements-about NAME<=SITUATION)
+(common-requirements-about (SITUATION-BINDS BINDS<=SITUATION)
+			   :as op)
 
 ;;;; Description:
+; Get binds from situation.
 
 #+syntax
-(NAME<=SITUATION #:arg) ; => result
+(op sb-kernel:instance) ; => result
 
 ;;;; Arguments and Values:
 
-; arg := 
+; instance := situation, otherwise error
+#?(op :not-situation-object) :signals error
+,:lazy T
 
-; result := 
+; result := ((var value)*)
+; var := string-designator
+; value := T
 
 ;;;; Affected By:
+; none
 
 ;;;; Side-Effects:
+; none
 
 ;;;; Notes:
 
 ;;;; Exceptional-Situations:
 
-(requirements-about SITUATION-BINDS)
+(common-requirements-about (SITUATION-FORM FORM<=SITUATION)
+			   :as op)
 
 ;;;; Description:
+; Get form from situation.
 
 #+syntax
-(SITUATION-BINDS sb-kernel:instance) ; => result
+(OP sb-kernel:instance) ; => result
 
 ;;;; Arguments and Values:
 
-; instance := 
+; instance := situation, otherwise error.
+#?(op :not-situation-object) :signals error
+,:lazy T
 
-; result := 
-
-;;;; Affected By:
-
-;;;; Side-Effects:
-
-;;;; Notes:
-
-;;;; Exceptional-Situations:
-
-(requirements-about BINDS<=SITUATION)
-
-;;;; Description:
-
-#+syntax
-(BINDS<=SITUATION #:arg) ; => result
-
-;;;; Arguments and Values:
-
-; arg := 
-
-; result := 
+; result := T
 
 ;;;; Affected By:
+; none
 
 ;;;; Side-Effects:
-
-;;;; Notes:
-
-;;;; Exceptional-Situations:
-
-(requirements-about SITUATION-FORM)
-
-;;;; Description:
-
-#+syntax
-(SITUATION-FORM sb-kernel:instance) ; => result
-
-;;;; Arguments and Values:
-
-; instance := 
-
-; result := 
-
-;;;; Affected By:
-
-;;;; Side-Effects:
-
-;;;; Notes:
-
-;;;; Exceptional-Situations:
-
-(requirements-about FORM<=SITUATION)
-
-;;;; Description:
-
-#+syntax
-(FORM<=SITUATION #:arg) ; => result
-
-;;;; Arguments and Values:
-
-; arg := 
-
-; result := 
-
-;;;; Affected By:
-
-;;;; Side-Effects:
+; none
 
 ;;;; Notes:
 

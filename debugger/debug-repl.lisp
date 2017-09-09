@@ -57,8 +57,12 @@
 
 (eval-when(:load-toplevel :compile-toplevel :execute)
   (defmacro defop((name message)&body body)
-    `(SETF(GETHASH ,name *DEBUG-OPS*)
-       (CONS ,message (LAMBDA ,@body)))))
+    (check-type name keyword)
+    (let((string(gensym "STRING")))
+      `(let((,string ,message))
+	 (CHECK-TYPE ,string STRING)
+	 (SETF(GETHASH ,name *DEBUG-OPS*)
+	   (CONS ,string (LAMBDA ,@body)))))))
 
 (defop(:d (concatenate 'string "Move "(Red "D")"own stack frame, aiming bottom."))
       (index)
@@ -123,7 +127,7 @@
 		   :key (lambda(x)
 			  (length(string(car x)))))))
     (dolist(bind binds)
-      (apply #'format t "~&~VS = ~S"num bind))))
+      (apply #'uiop:format! t "~&~VS = ~S"num bind))))
 
 (defop(:ab (concatenate 'string "Show "(Red "A")"ll "(Red "B")"indings."))(index)
   (print-binds(remove-duplicates(multiple-value-call #'set-prefix(make-environment index))
