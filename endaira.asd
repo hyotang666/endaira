@@ -25,6 +25,6 @@
                        ((:file "package")
                         (:file "endaira-builder" :depends-on ("package"))))
               ))
-;; Perform method below is added by JINGOH.GENERATOR.
-(defmethod perform ((o test-op) (c (eql (find-system "endaira"))))
-  (test-system :endaira.test))
+
+(defmethod component-depends-on ((o test-op) (c (eql (find-system "endaira"))))
+  (append (call-next-method)'((test-op "endaira.test"))))
