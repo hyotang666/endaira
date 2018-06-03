@@ -4,7 +4,18 @@
   :version "0.0.0"
   :author "Shinichi Sato <hyotang.karakoma@gmail.com>"
   :licence "LGPL"
-  :depends-on(:structure-ext :type-ext :prompt-for :treat-as-circle :millet :lambda-list :endaira.copy :endaira.substitute "cl-ansi-text")
+  :depends-on
+  (
+   "structure-ext" ; structure extensions.
+   "type-ext" ; type extensions.
+   "prompt-for" ; type safe user input.
+   "treat-as-circle" ; circle like sequence reference.
+   "millet" ; wrapper for implementation dependent utilities.
+   "lambda-list" ; tiny utilities for lambda list.
+   "endaira.copy" ; recursive object copy.
+   "endaira.substitute" ; substiture sexp.
+   "cl-ansi-text" ; text colorizing.
+   )
   :components((:module "internals"
                        :components 
                        ((:file "package")
