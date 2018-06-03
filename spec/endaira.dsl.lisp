@@ -16,7 +16,8 @@
 (let((var(loop :for endaira.dsl::arg :in 'nil
 	       :for endaira.dsl::val :in (list)
 	       :collect (list endaira.dsl::arg (if *copy*
-						 `(quote ,(endaira.copy:copy endaira.dsl::val))
+						 `',(handler-bind((condition #'endaira.dsl::copy-error))
+						      (endaira.copy:copy endaira.dsl::val))
 						 endaira.dsl::val)))))
   (handler-bind((error(lambda(condition)
 			(declare(ignore condition))

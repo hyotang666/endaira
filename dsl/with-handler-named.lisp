@@ -13,6 +13,9 @@
 
 (setf (symbol-value +binds+) nil)
 
+(defun copy-error(condition)
+  (error "ENDAIRA::COPY got error.~&Hint: May got infinite loop.~&Please evaluate (setq endaira::*copy* nil) then try again.~%~A"condition))
+
 (defmacro with-handler-named(name &body body)
   "Set named handler binding.
   syntax (WITH-HANDLER-NAMED name &BODY body)
@@ -29,7 +32,8 @@
       `(LET((,+binds+ (LOOP :FOR ARG :IN ',args
 			    :FOR VAL :IN (LIST ,@args)
 			    :COLLECT (LIST ARG (IF *COPY*
-						   `(QUOTE ,(COPY VAL))
+						   `(QUOTE ,(HANDLER-BIND((CONDITION #'COPY-ERROR))
+							      (COPY VAL)))
 						   VAL)))))
 	 (HANDLER-BIND((ERROR(LAMBDA(,condition)
 			       ; don't touch condition!,
