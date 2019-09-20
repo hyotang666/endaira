@@ -1,7 +1,6 @@
 (defpackage :endaira.builder(:use :cl :endaira.dsl)
   (:import-from :endaira.internals #:*Acc*)
   (:import-from :endaira.debugger #:Print-binds)
-  (:import-from :lambda-list #:Vars<=lambda-list)
   )
 
 (in-package :endaira.builder)
@@ -60,9 +59,12 @@
 	`(DEFMETHOD ,name ,@specializer ,lambda-list
 	   ,@documentation
 	   ,@declaration
-	   (WITH-HANDLER-NAMED,(cons name
-				     (remove-ignored-vars (Vars<=lambda-list lambda-list :as :method)
-							  declaration))
+	   (WITH-HANDLER-NAMED
+	     ,(cons name
+		    (remove-ignored-vars
+		      (lambda-fiddle:extract-all-lambda-vars
+			(lambda-fiddle:flatten-method-lambda-list lambda-list))
+		      declaration))
 	     ,@body))))))
 
 (progn . #.(mapcar

@@ -9,7 +9,6 @@
    "structure-ext" ; structure extensions.
    "prompt-for" ; type safe user input.
    "treat-as-circle" ; circle like sequence reference.
-   "lambda-list" ; tiny utilities for lambda list.
    "lambda-fiddle" ; Utilities for lambda-list.
    "endaira.copy" ; recursive object copy.
    "endaira.substitute" ; substiture sexp.
