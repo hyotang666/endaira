@@ -12,8 +12,9 @@
        ,@documentation
        ,@declaration
        (WITH-HANDLER-NAMED,(cons name
-				 (remove-ignored-vars (Vars<=lambda-list lambda-list)
-						      declaration))
+				 (remove-ignored-vars
+				   (lambda-fiddle:extract-all-lambda-vars lambda-list)
+				   declaration))
 	 ,@body))))
 
 (defun parse-body(src)
@@ -41,8 +42,10 @@
        ,@documentation
        ,@declaration
        (WITH-HANDLER-NAMED,(cons (format nil "~A[expand]" name)
-				 (remove-ignored-vars (Vars<=lambda-list lambda-list :as :macro)
-						      declaration))
+				 (remove-ignored-vars
+				   (lambda-fiddle:extract-all-lambda-vars
+				     (lambda-fiddle:flatten-lambda-list lambda-list))
+				   declaration))
 	 ,@body))))
 
 (defmacro endaira.core::defmethod(name &body body)
@@ -84,9 +87,11 @@
 		 `(,name,lambda-list
 		    ,@documentation
 		    ,@declaration
-		    (WITH-HANDLER-NAMED,(cons (format nil "~A[FLET]"name)
-					      (remove-ignored-vars (Vars<=lambda-list lambda-list)
-								   declaration))
+		    (WITH-HANDLER-NAMED
+		      ,(cons (format nil "~A[FLET]"name)
+			     (remove-ignored-vars
+			       (lambda-fiddle:extract-all-lambda-vars lambda-list)
+			       declaration))
 		      ,@body))))
      ,@body))
 
@@ -154,8 +159,10 @@
 				,init-form)
        ,@declaration
        (WITH-HANDLER-NAMED,(cons "DESTRUCTURING-BIND[body]"
-				 (remove-ignored-vars (Vars<=lambda-list binds :as :macro)
-						      declaration))
+				 (remove-ignored-vars
+				   (lambda-fiddle:extract-all-lambda-vars
+				     (lambda-fiddle:flatten-lambda-list binds))
+				   declaration))
 	 ,@body))))
 
 (defmacro endaira.core::ignore-errors(&body body)

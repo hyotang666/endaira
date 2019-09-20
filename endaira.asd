@@ -1,7 +1,7 @@
 ;; vim: ft=lisp et
 (defsystem :endaira
   :description "Common Lisp implementation especially for debuggin."
-  :version "0.0.2"
+  :version "0.0.3"
   :author "Shinichi Sato <hyotang.karakoma@gmail.com>"
   :licence "LGPL"
   :depends-on
@@ -10,6 +10,7 @@
    "prompt-for" ; type safe user input.
    "treat-as-circle" ; circle like sequence reference.
    "lambda-list" ; tiny utilities for lambda list.
+   "lambda-fiddle" ; Utilities for lambda-list.
    "endaira.copy" ; recursive object copy.
    "endaira.substitute" ; substiture sexp.
    "cl-ansi-text" ; text colorizing.
