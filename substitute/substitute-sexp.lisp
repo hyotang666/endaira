@@ -1,5 +1,4 @@
 (defpackage :endaira.substitute-sexp(:use :cl)
-  (:import-from :lambda-list #:Vars<=lambda-list)
   (:export
     #:substitute-sexp
     ))
@@ -86,7 +85,7 @@
 			acc
 			(REC(cdr list)(remove(car list)acc
 					:key #'car :test #'eq)))))
-	      (REC(Vars<=lambda-list lambda-list)env)))
+	      (REC(lambda-fiddle:extract-all-lambda-vars lambda-list)env)))
 	  )
     (destructuring-bind(op lambda-list . body)whole
       `(,op ,lambda-list ,@(substitute-each body
