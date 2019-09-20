@@ -24,8 +24,8 @@
   (debug-repl))
 
 (if *debugger-hook* ; somebody already set it, but...
-  (if(eq 'debugger-hook (Function-name *debugger-hook*)) ; it's me!
-    #0=(setq *debugger-hook* #'debugger-hook) ; reset is not problem.
+  (if(eq 'debugger-hook *debugger-hook*) ; it's me!
+    #0=(setq *debugger-hook* 'debugger-hook) ; reset is not problem.
     (when(y-or-n-p "ENDAIRA: Somebody already set *DEBUGGER-HOOK*. : ~S~%~9TReally you want to set ENDAIRA hook?"*debugger-hook*)
       #0#))
   ; else nobody set *DEBUGGER-HOOK*, so...

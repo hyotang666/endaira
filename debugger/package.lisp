@@ -4,7 +4,6 @@
   (:import-from :endaira.substitute-sexp #:substitute-sexp)
   (:import-from :prompt-for #:Prompt-for)
   (:import-from :treat-as-circle #:Nth-as-circle)
-  (:import-from :millet #:Function-name)
   (:import-from :cl-ansi-text #:Red)
   (:export
     ;;;; main api
