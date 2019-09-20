@@ -2,7 +2,6 @@
 
 (defpackage :endaira.debugger(:use :cl :endaira.internals)
   (:import-from :endaira.substitute-sexp #:substitute-sexp)
-  (:import-from :type-ext #:Prototype)
   (:import-from :prompt-for #:Prompt-for)
   (:import-from :treat-as-circle #:Nth-as-circle)
   (:import-from :millet #:Function-name)

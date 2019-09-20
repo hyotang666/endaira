@@ -1,13 +1,12 @@
 ;; vim: ft=lisp et
 (defsystem :endaira
   :description "Common Lisp implementation especially for debuggin."
-  :version "0.0.0"
+  :version "0.0.1"
   :author "Shinichi Sato <hyotang.karakoma@gmail.com>"
   :licence "LGPL"
   :depends-on
   (
    "structure-ext" ; structure extensions.
-   "type-ext" ; type extensions.
    "prompt-for" ; type safe user input.
    "treat-as-circle" ; circle like sequence reference.
    "millet" ; wrapper for implementation dependent utilities.

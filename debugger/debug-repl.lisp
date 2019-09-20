@@ -173,7 +173,9 @@
   (print-tracing)
   (signal 'skip-print))
 
-(Prototype print-tracing(&optional stream)null)
+(declaim (ftype (function (&optional stream)
+			  (values null &optional))
+		print-tracing))
 (defun print-tracing(&optional(*standard-output* *debug-io*))
   (loop :initially (terpri)
 	:for situation :in *Acc*
